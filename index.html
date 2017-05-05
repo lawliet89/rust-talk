@@ -160,6 +160,47 @@
 			<section>
 				<section data-markdown>
 					<textarea data-template>
+						# `struct`s
+
+						- The "Abstract Data Type" of Rust
+						- Holds public or private data
+						- Are _not_ classes
+							* No inheritance
+							* Data and semantics/behaviour are considered separate
+
+
+						```rust
+struct Person {
+	pub name: String,
+	age: u8
+}
+						```
+					</textarea>
+				</section>
+
+				<section data-markdown>
+					<textarea data-template>
+						## `impl` Semantics and Behaviour
+
+						```rust
+impl Person {
+	fn eat(&mut self) {
+		// ...
+	}
+
+	fn address(&self) -> Address {
+		// ...
+	}
+}
+
+						```
+					</textarea>
+				</section>
+			</section>
+
+			<section>
+				<section data-markdown>
+					<textarea data-template>
 						## Rust Ownership System (`borrowck`)
 
 
@@ -412,22 +453,76 @@ fn main() {
 			<section>
 				<section data-markdown>
 					<textarea data-template>
-						# `struct`s
-
-						- The "Abstract Data Type" of Rust
-						- Holds public or private data
-
+						# Lifetimes
 						```rust
-struct Person {
-	pub name: String,
-	age: u8
+{
+	let r;
+	{
+		let x = 5;
+		r = &x;
+	}
+	println!("r: {}", r);
 }
 						```
+<pre>
+error: `x` does not live long enough
+   |
+6  |         r = &x;
+   |              - borrow occurs here
+7  |     }
+   |     ^ `x` dropped here while still borrowed
+...
+10 | }
+   | - borrowed value needs to live until here
+</pre>
+
 					</textarea>
 				</section>
 
-			</section>
+				<section data-markdown>
+					<textarea data-template>
+						## Visualising Lifetimes
+```rust
+{
+    let r;         // -------+-- 'a
+                   //        |
+    {              //        |
+        let x = 5; // -+-----+-- 'b
+        r = &x;    //  |     |
+    }              // -+     |
+                   //        |
+    println!("r: {}", r); // |
+                   //        |
+                   // -------+
+}
+```
+					</textarea>
+				</section>
 
+				<section data-markdown>
+					<textarea data-template>
+						## Zero-copy operations [Run](https://play.integer32.com/?gist=f7d7504bdbbed88a0069030ba9c92cd0&version=undefined)
+						```rust
+extern crate serde;
+#[macro_use] extern crate serde_derive;
+extern crate serde_json;
+#[derive(Deserialize, Debug)]
+struct Data<'a> {
+    value: &'a str,
+}
+fn main() {
+    let json = r#"{"value": "this string is never copied"}"#;
+    let deserialized: Data = serde_json::from_str(json)
+								.unwrap();
+    println!("{:?}", deserialized);
+}
+						```
+
+						- Look for me for more.
+					</textarea>
+
+				</section>
+			</section>
 
 			<section>
 				<section data-markdown>
