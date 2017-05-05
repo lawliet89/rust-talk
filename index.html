@@ -1,38 +1,93 @@
 <!doctype html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/black.css">
+	<title>What is Rust?</title>
 
-		<!-- Theme used for syntax highlighting of code -->
-		<link rel="stylesheet" href="lib/css/zenburn.css">
+	<link rel="stylesheet" href="css/reveal.css">
+	<link rel="stylesheet" href="css/theme/black.css">
 
-		<!-- Printing and PDF exports -->
-		<script>
-			var link = document.createElement( 'link' );
-			link.rel = 'stylesheet';
-			link.type = 'text/css';
-			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
-			document.getElementsByTagName( 'head' )[0].appendChild( link );
-		</script>
-	</head>
-	<body>
-		<div class="reveal">
-			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
-			</div>
+	<!-- Theme used for syntax highlighting of code -->
+	<link rel="stylesheet" href="lib/css/zenburn.css">
+
+	<!-- Printing and PDF exports -->
+	<script>
+		var link = document.createElement('link');
+		link.rel = 'stylesheet';
+		link.type = 'text/css';
+		link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+		document.getElementsByTagName('head')[0].appendChild(link);
+	</script>
+</head>
+
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section data-markdown>
+				<textarea data-template>
+						# What is Rust?
+
+						Yong Wen Chua
+
+						https://lawliet89.github.io/rust-talk/
+					</textarea>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
+						## Fast, safe, concurrent <!-- .element: class="fragment" data-fragment-index="1" -->
+
+						## Pick Three <!-- .element: class="fragment" data-fragment-index="2" -->
+					</textarea>
+			</section>
+
+			<section>
+				<section data-markdown>
+					<textarea data-template>
+						## Rust
+
+						 - Systems Programming Language
+						 - Statically typed
+						 - Compiled
+						 - High performance — comparable to C
+					</textarea>
+				</section>
+
+				<section data-markdown>
+					<textarea data-template>
+						> This is one of the biggest revelations we've had in Rust's development -
+						that there are vast audiences that want to write low level code but don't want
+						to write C and C++. We see a lot of young programmers with backgrounds in Ruby
+						and JavaScript getting into Rust, and creating their own high-performance
+						systems software for the first time.
+
+						Brian Anderson (Mozilla Rust Core Team Member)
+					</textarea>
+				</section>
+			</section>
+
+			<section data-markdown>
+				<textarea data-template>
+					## Hello World
+
+					```rust
+					fn main() {
+						println!("Hello, world!");
+					}
+					```
+
+					[Run](https://play.integer32.com/?gist=c21e8e043c570c104afe927faa4de941)
+				</textarea>
+			</section>
 		</div>
+	</div>
 
-		<script src="lib/js/head.min.js"></script>
-		<script src="js/reveal.js"></script>
+	<script src="lib/js/head.min.js"></script>
+	<script src="js/reveal.js"></script>
 
-		<script>
+	<script>
 			// More info about config & dependencies:
 			// - https://github.com/hakimel/reveal.js#configuration
 			// - https://github.com/hakimel/reveal.js#dependencies
@@ -41,9 +96,10 @@
 					{ src: 'plugin/markdown/marked.js' },
 					{ src: 'plugin/markdown/markdown.js' },
 					{ src: 'plugin/notes/notes.js', async: true },
-					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function () { hljs.initHighlightingOnLoad(); } }
 				]
 			});
-		</script>
-	</body>
+	</script>
+</body>
+
 </html>
