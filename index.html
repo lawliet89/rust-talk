@@ -520,7 +520,36 @@ fn main() {
 
 						- Look for me for more.
 					</textarea>
+				</section>
 
+				<section data-markdown>
+					<textarea data-template>
+						### Bonus - borrow checker prevents bad operations ([Run](https://play.integer32.com/?gist=4b7e98386029d703f51c6f94e9e8488a&version=undefined))
+
+						```rust
+extern crate serde;
+#[macro_use]
+extern crate serde_derive;
+extern crate serde_json;
+
+#[derive(Deserialize, Debug)]
+struct Data<'a> {
+    value: &'a str,
+}
+
+fn main() {
+    let mut json = r#"{"value": "this string is never copied"}"#.to_string();
+    let mut other_json = r#"{"value": "this string is aaaaa copied"}"#.to_string();
+
+    let deserialized: Data = serde_json::from_str(&json).unwrap();
+    println!("{:?}", deserialized);
+
+    std::mem::swap(&mut json, &mut other_json);
+    println!("{:?}", deserialized);
+}
+
+						```
+					</textarea>
 				</section>
 			</section>
 
