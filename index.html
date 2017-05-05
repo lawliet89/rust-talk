@@ -160,33 +160,124 @@
 				<section data-markdown>
 					<textarea data-template>
 						## Rust Ownership System (`borrowck`)
+
+
 					</textarea>
+				</section>
+
+				<section data-markdown>
+					<textarea data-template>
+						### Remember C++'s pass by reference vs pass by value?
+						``` rust
+fn say_my_name(name: String) {
+    println!("Your name is {}", name);
+}
+
+fn main() {
+    let name = "Dovahkiin".to_string();
+
+    say_my_name(name);
+
+    // The next line won't compile
+    // println!("Hello {}", name);
+}
+						```
+						[Run](https://play.integer32.com/?gist=4cae497cb271314b41bae81cb1b35bf0)
+					</textarea>
+				</section>
+
+				<section>
+					<pre>
+>error[E0382]: use of moved value: `name`
+  --> src/main.rs:11:26
+   |
+8  |     say_my_name(name);
+   |                 ---- value moved here
+...
+11 |     println!("Hello {}", name);
+   |                          ^^^^ value used here after move
+   |
+   = note: move occurs because `name` has type `std::string::String`,
+   which does not implement the `Copy` trait
+</pre>
+
+					<ul>
+						<li>Values are moved by default</li>
+						<li>Unless the `Copy` trait is implemented</li>
+					</ul>
+				</section>
+
+				<section data-markdown>
+					<textarea data-template>
+						### We Need References
+
+						> We can solve any problem by introducing an extra level of indirection
+
+						-- David J. Wheeler
+					</textarea>
+				</section>
+
+				<section>
+					<table>
+						<thead>
+							<tr class="header">
+								<th style="text-align: left;">Ownership enables:</th>
+								<th style="text-align: left;">which removes:</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="odd">
+								<td style="text-align: left;">RAII-style destructors</td>
+								<td style="text-align: left;">a source of memory leaks (or fd leaks, etc)</td>
+							</tr>
+							<tr class="even">
+								<td style="text-align: left;">no dangling pointers</td>
+								<td style="text-align: left;">many resource management bugs</td>
+							</tr>
+							<tr class="odd">
+								<td style="text-align: left;">no data races</td>
+								<td style="text-align: left;">many multithreading heisenbugs</td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="fragment">
+						<blockquote>
+							<p>Do I need to take ownership here, accepting the associated resource management
+								responsibility? Would temporary access
+								suffice?</p>
+						</blockquote>
+					</div>
+
+					<aside class="notes">
+						Good developers ask this already! Rust forces function signatures to encode the answers
+						(and they are checked by the compiler). Can also use `Cow` for the caller to decide.
+					</aside>
 				</section>
 
 				<section>
 					<iframe width="560" height="315" src="https://www.youtube.com/embed/rEsoImv7vq8?rel=0" frameborder="0" allowfullscreen></iframe>
 				</section>
 			</section>
+			</div>
 		</div>
-	</div>
 
-	<script src="lib/js/head.min.js"></script>
-	<script src="js/reveal.js"></script>
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
 
-	<script>
-		// More info about config & dependencies:
-		// - https://github.com/hakimel/reveal.js#configuration
-		// - https://github.com/hakimel/reveal.js#dependencies
-		Reveal.initialize({
-			dependencies: [
-				{ src: 'plugin/markdown/marked.js' },
-				{ src: 'plugin/markdown/markdown.js' },
-				{ src: 'plugin/notes/notes.js', async: true },
-				{ src: 'plugin/highlight/highlight.js', async: true, callback: function () { hljs.initHighlightingOnLoad(); } }
-			],
-			history: true
-		});
-	</script>
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function () { hljs.initHighlightingOnLoad(); } }
+				],
+				history: true
+			});
+		</script>
 </body>
 
 </html>
