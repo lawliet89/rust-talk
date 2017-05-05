@@ -272,7 +272,7 @@ fn main() {
 
 				<section>
 					<div class="stickarea">
-						<div id="stick-title-sh">Borrow a shared reference (&)<br></div>
+						<div id="stick-title-sh">Borrow a shared reference (&amp;)<br></div>
 						<img src="images/stick-boy-up.png" class="b" id="boy-sh">
 						<img src="images/stick-girl-down.png" class="g" id="girl-sh">
 						<img src="images/balloon-green-nostring.png" id="balloon-sh">
@@ -284,7 +284,7 @@ fn main() {
 
 				<section>
 					<div class="stickarea">
-						<div id="stick-title-mut">Borrow a mutable reference (&mut)</div>
+						<div id="stick-title-mut">Borrow a mutable reference (&amp;mut)</div>
 						<img src="images/stick-boy-up.png" class="b" id="boy-mut">
 						<img src="images/stick-girl-down.png" class="g" id="girl-mut">
 						<img src="images/balloon-red-nostring.png" id="balloon-mut">
@@ -295,6 +295,128 @@ fn main() {
 					<div class="fragment" style="display: none" id="balloon-mut-trigger2" />
 					<div class="fragment" style="display: none" id="balloon-mut-trigger3" />
 					<div class="fragment" style="display: none" id="balloon-mut-trigger4" />
+				</section>
+
+				<section data-markdown>
+					<textarea data-template>
+						## Immutable Borrow
+
+						```rust
+fn main() {
+    let strings = vec!["Hello", "world"];
+
+    let borrow_one = &strings;
+    let borrow_two = &strings;
+
+    // Won't compile!
+    // borrow_two.push("today");
+}
+						```
+
+						<pre>
+error: cannot borrow immutable borrowed content
+`*borrow_two` as mutable
+ --> src/main.rs:8:5
+  |
+8 |     borrow_two.push("today");
+  |     ^^^^^^^^^^ cannot borrow as mutable
+</pre>
+					</textarea>
+				</section>
+
+				<section data-markdown>
+					<textarea data-template>
+						## Mutable Borrow
+
+						```rust
+fn main() {
+    let mut strings = vec!["Hello", "world"];
+
+    let mut borrow_one = &mut strings;
+
+    borrow_one.push("today");
+
+    // Won't compile
+    // let borrow_two = &strings;
+}
+						```
+<pre style="font-size: 12pt">
+	error[E0502]: cannot borrow `strings` as immutable
+	because it is also borrowed as mutable
+  --> src/main.rs:9:23
+   |
+4  |     let mut borrow_one = &mut strings;
+   |                               ------- mutable borrow occurs here
+...
+9  |     let borrow_two = &strings;
+   |                       ^^^^^^^ immutable borrow occurs here
+10 | }
+   | - mutable borrow ends here
+</pre>
+					</textarea>
+
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+					## RAII [Run](https://play.integer32.com/?gist=833c6f69ddd3a4a1e49e8bcd397a85d9)
+
+					```rust
+use std::io::prelude::*;
+use std::io::{Result, Cursor};
+use std::str;
+
+fn write<W: Write>(mut writer: W) -> Result<()> {
+    writer.write_all(b"Hello world")
+}
+
+fn read<R: Read>(mut reader: R) -> Result<String> {
+    let mut buffer = String::new();
+    reader.read_to_string(&mut buffer)?;
+    Ok(buffer)
+}
+
+fn main() {
+    let buffer = {
+        let buffer: Vec<u8> = vec![];
+        let mut handle = Cursor::new(buffer);
+        write(&mut handle).unwrap();
+        handle.set_position(0);
+        let output = read(&mut handle).unwrap();
+        println!("{}", output);
+        handle.into_inner()
+    };
+    // IO Handle to buffer is dropped, and closed
+
+    let string = str::from_utf8(&buffer).unwrap();
+    println!("{}", string);
+}
+
+					```
+				</textarea>
+
+				</section>
+
+				<section data-markdown>
+					<textarea data-template>
+						## Stack vs Heap
+
+						- Most data on stack
+						- Stack space is limited
+						- Stack size must be known at compile time
+						- "Smart pointers" to work with data on heap
+						- [More on smart pointers](http://pnkfx.org/presentations/qcon-london2016-deploy/qcon-london2016.html#/pointers-smart-and-otherwise)
+					</textarea>
+				</section>
+			</section>
+
+			<section>
+				<section data-markdown>
+					<textarea data-template>
+						# Zero Cost Abstraction (*)
+
+						- Terms and conditions apply
+						- Allows `interface` like abstraction via traits
+					</textarea>
 				</section>
 			</section>
 		</div>
