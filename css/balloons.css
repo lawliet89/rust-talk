@@ -1,0 +1,167 @@
+/* Stick figure balloon illustrations */
+
+.stickarea {
+    width: 800px;
+    height: 500px;
+}
+
+.stickarea .b,
+.stickarea .g {
+    width: 200px;
+    height: 200px;
+}
+
+.stickarea .b {
+    position: absolute;
+    top: 300px;
+    left: 100px;
+}
+
+.stickarea .g {
+    position: absolute;
+    top: 300px;
+    left: 500px;
+}
+
+.stickarea .o {
+    width: 300px;
+}
+
+.stickarea img {
+    border: none !important;
+    background: none !important;
+    box-shadow: none !important;
+}
+
+.dialog {
+    font-size: 20px;
+    position: absolute;
+    top: 200px;
+    left: 130px;
+    border: 2px solid white;
+    border-radius: 50%;
+    padding: 15px;
+}
+
+#balloon-owned {
+    position: absolute;
+    top: 80px;
+    left: 130px;
+    visibility: hidden;
+}
+
+#balloon-owned.visible {
+    visibility: visible;
+}
+
+#balloon-owned.moved {
+    position: absolute;
+    top: 80px;
+    left: 380px;
+    transition-duration: 1s;
+}
+
+#balloon-owned-di {
+    visibility: hidden;
+}
+
+#balloon-owned-di.visible {
+    visibility: visible;
+}
+
+#balloon-owned.floated {
+    top: -1000px;
+    transition-duration: 3s;
+}
+
+#balloon-sh {
+    width: 130px;
+    position: absolute;
+    top: 80px;
+    left: 215px;
+    transition-duration: 2s;
+}
+
+#string-sh {
+    width: 50px;
+    height: 160px;
+    position: absolute;
+    top: 214px;
+    left: 256px;
+    transition-duration: 2s;
+}
+
+#balloon-sh.moved {
+    width: 130px;
+    position: absolute;
+    top: 250px;
+    left: 455px;
+    transition-duration: 2s;
+}
+
+#string-sh.moved {
+    width: 50px;
+    height: 260px;
+    position: absolute;
+    top: 240px;
+    left: 370px;
+    transform: rotateZ(95deg);
+    transition-duration: 2s;
+}
+
+#balloon-mut {
+    width: 130px;
+    position: absolute;
+    top: 80px;
+    left: 215px;
+    transition-duration: 2s;
+}
+
+#string-mut {
+    width: 50px;
+    height: 160px;
+    position: absolute;
+    top: 214px;
+    left: 256px;
+    transition-duration: 2s;
+}
+
+#balloon-mut.moved {
+    width: 130px;
+    position: absolute;
+    top: 250px;
+    left: 455px;
+    transition-duration: 2s;
+}
+
+#string-mut.moved {
+    width: 50px;
+    height: 260px;
+    position: absolute;
+    top: 240px;
+    left: 370px;
+    transform: rotateZ(95deg);
+    transition-duration: 2s;
+}
+
+#pop {
+    visibility: hidden;
+    width: 200px;
+    position: absolute;
+    top: 60px;
+    left: 180px;
+}
+
+#pop.visible {
+    visibility: visible;
+}
+
+#balloon-mut.popped {
+    visibility: hidden;
+    transition-duration: 0s;
+}
+
+#string-mut.popped {
+    visibility: hidden;
+    transition-duration: 0s;
+}
