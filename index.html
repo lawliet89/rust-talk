@@ -49,7 +49,7 @@
 						## Rust
 
 						 - Systems Programming Language
-						 - Statically typed
+						 - Statically and strongly typed
 						 - Compiled
 						 - High performance — comparable to C
 					</textarea>
@@ -66,6 +66,75 @@
 						Brian Anderson (Mozilla Rust Core Team Member)
 					</textarea>
 				</section>
+
+				<section data-markdown>
+					<textarea data-template>
+						## Pains of Weak and Dynamic Type Systems
+
+						- Hard to refactor
+						- Hard to debug
+						- Hard to design
+
+						(Of course there are great
+						[uses](https://softwareengineering.stackexchange.com/questions/122205/)
+						for dynamic type systems)
+					</textarea>
+				</section>
+
+				<section data-markdown>
+					<textarea data-template>
+						## Rust Safety Guarantees
+
+						- No dereferencing null or dangling pointers
+						- Reading uninitialised memory
+						- No invalid primitives (e.g. a `bool` that is not 0 or 1; a non-UTF8 `str`)
+						- No Data Race
+
+						* There is `unsafe` too.
+					</textarea>
+				</section>
+
+				<section data-markdown>
+					<textarea data-template>
+						## Rust _non_-guarantees
+
+						- Race Condition
+						- Deadlock
+						- Memory Leaks
+						- Failure to call destructors
+						- Program Abortion
+
+						> However any program that actually manages to do such a thing is probably incorrect.
+						Rust provides lots of tools to make these things rare, but these problems are considered
+						impractical to categorically prevent.
+
+
+					</textarea>
+				</section>
+
+				<section data-markdown>
+					<textarea data-template>
+						## Memory Safety
+
+						- Segmentation faults are hard to catch and debug
+						- `Cloudbleed`, `StageFright`
+						- Difficult to get right in C
+						- Cumbersome to use in C++
+						- [Read more](https://tonyarcieri.com/it-s-time-for-a-memory-safety-intervention)
+
+					</textarea>
+				</section>
+
+				<section>
+					<img src="https://cloud.githubusercontent.com/assets/983101/25533911/cc972f5c-2c64-11e7-8623-ef937fa045a5.png" />
+
+					<aside class="notes">
+						Tangentially related. I was working on a Pascal to ARM compiler (in C++), and then I said "fuck it" to manual memory management.
+						So I used the (newfangled then) `shared_ptr` to try and side-step that. I don't have the numbers now, but `valgrind`
+						still showed plenty of memory leaks. Probably due to circular references. But hey, I didn't get "many" segfaults. I
+						just hoped there was something nicer to use.
+					</aside>
+				</section>
 			</section>
 
 			<section data-markdown>
@@ -81,6 +150,23 @@
 					[Run](https://play.integer32.com/?gist=c21e8e043c570c104afe927faa4de941)
 				</textarea>
 			</section>
+
+			<section>
+				<script type="text/javascript" src="https://asciinema.org/a/5t5ougvj179ribhjwrsg1mou6.js" id="asciicast-5t5ougvj179ribhjwrsg1mou6"
+				 async></script>
+			</section>
+
+			<section>
+				<section data-markdown>
+					<textarea data-template>
+						## Rust Ownership System (`borrowck`)
+					</textarea>
+				</section>
+
+				<section>
+					<iframe width="560" height="315" src="https://www.youtube.com/embed/rEsoImv7vq8?rel=0" frameborder="0" allowfullscreen></iframe>
+				</section>
+			</section>
 		</div>
 	</div>
 
@@ -88,17 +174,18 @@
 	<script src="js/reveal.js"></script>
 
 	<script>
-			// More info about config & dependencies:
-			// - https://github.com/hakimel/reveal.js#configuration
-			// - https://github.com/hakimel/reveal.js#dependencies
-			Reveal.initialize({
-				dependencies: [
-					{ src: 'plugin/markdown/marked.js' },
-					{ src: 'plugin/markdown/markdown.js' },
-					{ src: 'plugin/notes/notes.js', async: true },
-					{ src: 'plugin/highlight/highlight.js', async: true, callback: function () { hljs.initHighlightingOnLoad(); } }
-				]
-			});
+		// More info about config & dependencies:
+		// - https://github.com/hakimel/reveal.js#configuration
+		// - https://github.com/hakimel/reveal.js#dependencies
+		Reveal.initialize({
+			dependencies: [
+				{ src: 'plugin/markdown/marked.js' },
+				{ src: 'plugin/markdown/markdown.js' },
+				{ src: 'plugin/notes/notes.js', async: true },
+				{ src: 'plugin/highlight/highlight.js', async: true, callback: function () { hljs.initHighlightingOnLoad(); } }
+			],
+			history: true
+		});
 	</script>
 </body>
 
