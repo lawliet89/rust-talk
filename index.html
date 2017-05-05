@@ -412,10 +412,76 @@ fn main() {
 			<section>
 				<section data-markdown>
 					<textarea data-template>
+						# `struct`s
+
+						- The "Abstract Data Type" of Rust
+						- Holds public or private data
+
+						```rust
+struct Person {
+	pub name: String,
+	age: u8
+}
+						```
+					</textarea>
+				</section>
+
+			</section>
+
+
+			<section>
+				<section data-markdown>
+					<textarea data-template>
 						# Zero Cost Abstraction (*)
 
 						- Terms and conditions apply
 						- Allows `interface` like abstraction via traits
+					</textarea>
+				</section>
+
+				<section data-markdown>
+					<textarea data-template>
+						## `Read` and `Write` traits
+
+						```rust
+fn write<W: Write>(mut writer: W) -> Result<()> {
+    writer.write_all(b"Hello world")
+}
+
+fn read<R: Read>(mut reader: R) -> Result<String> {
+    let mut buffer = String::new();
+    reader.read_to_string(&mut buffer)?;
+    Ok(buffer)
+}
+
+						```
+					</textarea>
+				</section>
+
+				<section data-markdown>
+					<textarea data-template>
+						### Traits
+
+						- Are interfaces
+
+					</textarea>
+				</section>
+
+				<section data-markdown>
+					<textarea data-template>
+						### Zero (runtime) cost abstraction
+
+						- Via Monomorphization
+						- You pay with binary bloat
+						- Static Dispatch
+
+						```llvm
+						define internal void
+						@_ZN10playground4read17h19c71745804f34d5E(
+							%"core::result::Result<collections::string::String, std::io::error::Error>"* noalias nocapture sret dereferenceable(32),
+							%"std::io::cursor::Cursor<collections::vec::Vec<u8>>"* dereferenceable(32)) unnamed_addr #1 personality i32 (i32, i32, i64, %"unwind::libunwind::_Unwind_Exception"*, %"unwind::libunwind::_Unwind_Context"*)* @rust_eh_personality !dbg !2683 {
+
+						```
 					</textarea>
 				</section>
 			</section>
