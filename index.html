@@ -153,8 +153,7 @@
 			</section>
 
 			<section>
-				<script type="text/javascript" src="https://asciinema.org/a/5t5ougvj179ribhjwrsg1mou6.js" id="asciicast-5t5ougvj179ribhjwrsg1mou6"
-				 async></script>
+				<script type="text/javascript" src="https://asciinema.org/a/5t5ougvj179ribhjwrsg1mou6.js" id="asciicast-5t5ougvj179ribhjwrsg1mou6"></script>
 			</section>
 
 			<section>
@@ -587,6 +586,7 @@ fn read<R: Read>(mut reader: R) -> Result<String> {
 						### Traits
 
 						- Are interfaces
+						- Allows for polymorphism
 
 					</textarea>
 				</section>
@@ -606,6 +606,42 @@ fn read<R: Read>(mut reader: R) -> Result<String> {
 							%"std::io::cursor::Cursor<collections::vec::Vec<u8>>"* dereferenceable(32)) unnamed_addr #1 personality i32 (i32, i32, i64, %"unwind::libunwind::_Unwind_Exception"*, %"unwind::libunwind::_Unwind_Context"*)* @rust_eh_personality !dbg !2683 {
 
 						```
+					</textarea>
+				</section>
+
+				<section data-markdown>
+					<textarea data-template>
+### Dynamic Dispatch
+
+- via vtable
+- Pay during run time
+
+```rust
+use std::io::{Read, Result};
+
+fn read_config<R>(path: &str, stdin: R) -> Result<Box<Read>>
+    where R: Read + 'static
+{
+    let reader: Box<Read> = match path {
+        "-" => Box::new(stdin),
+        path => Box::new(File::open(path))?,
+    };
+
+    Ok(reader)
+}
+```
+
+					</textarea>
+
+				</section>
+			</section>
+
+			<section>
+				<section data-markdown>
+					<textarea data-template>
+						## Fearless Concurrency
+
+						Extending the ownership system between threads
 					</textarea>
 				</section>
 			</section>
