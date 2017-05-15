@@ -854,6 +854,100 @@ fn main() {
 					- Implementing both traits are `unsafe`.
 				</section>
 			</section>
+
+			<section>
+				<section data-markdown>
+					## Useful Rust Types
+				</section>
+
+				<section data-markdown>
+					### `enum`s or Tagged Union
+
+					- A choice between value types
+					- Useful to do static type checking on business logic
+
+				</section>
+
+				<section data-markdown>
+					### Temperature ([Run](https://play.integer32.com/?gist=dc36b31d1be4dbf9cabf5ba08d6ef651&version=undefined))
+
+```rust
+#[derive(Debug, Clone)]
+pub enum Temperature {
+    Celsius(f64),
+    Fahrenheit(f64),
+    Kelvin(f64),
+}
+
+impl Temperature {
+    fn to_kelvin(&self) -> Self {
+        use self::Temperature::*;
+
+        match *self {
+            Kelvin(_) => self.clone(),
+            Celsius(degree) => Kelvin(degree + 273.15),
+            Fahrenheit(degree) => Kelvin((degree + 459.67) * 5.0 / 9.0),
+        }
+    }
+}
+
+fn main() {
+    let celsius = Temperature::Celsius(0.0);
+    println!("{:?} is {:?}", celsius, celsius.to_kelvin());
+    let fahrenheit = Temperature::Fahrenheit(451.0);
+    println!("{:?} is {:?}", fahrenheit, fahrenheit.to_kelvin());
+}
+
+```
+				</section>
+
+				<section data-markdown>
+					### `Result`
+					```rust
+enum Result<T, E> {
+    Ok(T),
+    Err(E),
+}
+					```
+
+					- Forces you to deal with errors
+					- Analagous to the `throws` clause in Java method signatures
+					- You can `unwrap()` to get the value out, but it can `panic`!
+					- Use the `try!` macro or `?` operator to propogate errors (look for me for more)
+					- [Example](https://github.com/lawliet89/rand-bytes/blob/6bf3fe3151435854dd46bdfc99b196815c8bd42b/src/main.rs#L69-L73)
+				</section>
+
+				<section data-markdown>
+					### `Option`
+					```rust
+enum Option<T> {
+    None,
+    Some(T),
+}
+					```
+					- No value, or some value
+					- Remember returning `int` in C? Does 0 mean no value, or is the value actually 0?
+
+
+					```rust
+use std::collections::HashMap;
+
+let mut map = HashMap::new();
+map.insert(1, "a");
+assert_eq!(map.get(&1), Some(&"a"));
+assert_eq!(map.get(&2), None);
+
+					```
+
+				</section>
+			</section>
+
+			<section data-markdown>
+				## More...
+
+				- [The Rust Book(s)](https://doc.rust-lang.org/nightly/book/)
+				- `curl https://sh.rustup.rs -sSf | sh`
+			</section>
 		</div>
 	</div>
 
